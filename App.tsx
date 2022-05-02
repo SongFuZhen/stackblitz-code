@@ -1,11 +1,12 @@
 import * as React from 'react';
-import CountComponent from './count';
+import Count from './count';
 import './style.css';
 
 export default function App() {
   return (
     <div>
-      <CountComponent />
+      {/* Count */}
+      <Count />
     </div>
   );
 }
