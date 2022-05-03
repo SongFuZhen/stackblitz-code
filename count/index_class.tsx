@@ -59,7 +59,7 @@ class CountClassComponent extends React.PureComponent<Props, StateProps> {
 
     return (
       <div className={'content'}>
-        <Title level={3}>(Class) 当前数是 {this.state.count}</Title>
+        <Title level={4}>(Class) 当前数是 {this.state.count}</Title>
 
         <Space>
           <Button type="primary" onClick={this.handleAddCount}>
