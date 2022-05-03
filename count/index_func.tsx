@@ -22,7 +22,7 @@ const CountComponent = () => {
 
   return (
     <div className={'content'}>
-      <Title level={2}>(Func) 当前数是 {count}</Title>
+      <Title level={3}>(Func) 当前数是 {count}</Title>
 
       <Space>
         <Button type="primary" onClick={handleAddCount}>
