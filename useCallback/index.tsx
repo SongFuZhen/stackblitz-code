@@ -13,6 +13,7 @@ const DemoUseCallback = () => {
     <React.Fragment>
       <Title level={3}>更新 Count，Child1 会渲染, Child2 不渲染 </Title>
 
+      <Title level={4}>Count： {count}</Title>
       <Space>
         <Button
           type="primary"
@@ -33,15 +34,15 @@ const DemoUseCallback = () => {
         </Button>
       </Space>
 
-      <p>当前数字： {count}</p>
-
+      <Title level={4}>Count1: {count1}</Title>
       <DemoUseCallbackChild
         count={count1}
         onCallback={(value: number) => {
           setCount1(value);
         }}
       />
-
+      <br />
+      <Title level={4}>Count2: {count2}</Title>
       <DemoUseCallbackChild
         count={count2}
         onCallback={React.useCallback(
