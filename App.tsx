@@ -4,6 +4,7 @@ import Count from './count';
 import LargeData from './largeData';
 import './style.css';
 import VirtualList from './virtualList';
+import DemoUseCallback from './useCallback';
 
 const { Title } = Typography;
 
@@ -21,6 +22,10 @@ export default function App() {
       {/* 虚拟列表 */}
       <Title level={3}>Virtual List</Title>
       <VirtualList />
+
+      {/* useCallback */}
+      <Title level={3}>useCallback</Title>
+      <DemoUseCallback />
     </div>
   );
 }
