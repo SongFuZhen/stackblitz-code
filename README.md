@@ -1,3 +1,11 @@
-# react-ts-mchmwg
+# Getting Started
 
-[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/react-ts-mchmwg)
+## How to use
+
+Run the following commands in the root directory.
+
+```bash
+npm install
+npm run build
+npm run start
+```

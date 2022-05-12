@@ -1,21 +1,21 @@
 {
-  "name": "react-ts",
-  "version": "0.0.0",
+  "name": "getting-started-using-a-configuration",
+  "version": "1.0.0",
   "private": true,
-  "dependencies": {
-    "@types/react": "^18.0.8",
-    "@types/react-dom": "^18.0.3",
-    "antd": "^4.20.2",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0"
-  },
   "scripts": {
-    "start": "react-scripts-ts start",
-    "build": "react-scripts-ts build",
-    "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "start": "serve dist"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "react-scripts-ts": "latest"
+    "serve": "^13.0.2",
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.2"
   }
 }
