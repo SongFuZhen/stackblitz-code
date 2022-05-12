@@ -1,4 +1,5 @@
 // CommonJS 的写法
+// CommonJS规范加载模块是同步的，也就是说，只有加载完成，才能执行后面的操作。
 // 使用 Module.exports 可以导出任何时值
 // number 是原始类型， number 值在经过 Foo 调用之后，内部会改变，但是再外部调用是不会改变的
 // arr 是对象， arr 值会改变
