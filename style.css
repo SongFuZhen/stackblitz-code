@@ -1,5 +1,4 @@
-@import '~antd/dist/antd.css';
-
-.ant-btn {
-  border-radius: 32px;
+h1,
+h2 {
+  font-family: Lato;
 }
