@@ -2,6 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const zlib = require('zlib');
 
+console.log('process', process);
+
 const [fileName] = process.argv.slice(2);
 
 gZipFn(fileName);
