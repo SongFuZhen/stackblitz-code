@@ -7,6 +7,8 @@ appDiv.innerHTML = `<h1>JS Starter</h1>`;
 
 // Import JS
 
+import './promise/index.js';
+
 import './proto/index.js';
 import './copy/index.js';
 import './copy/deep_clone.js';
