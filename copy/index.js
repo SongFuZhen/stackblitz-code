@@ -52,7 +52,7 @@ console.log('copy_arr_5 :: ', copy_arr_5, ', origin_arr ::', origin_arr);
 
 console.log('--------------- 深拷贝 ---------------');
 
-// 使用 JSON.stringify
+// 使用 JSON.stringify，无法转换函数，但是可以通过 第二个参数 replacer，进行替换
 
 const deep_copy_1 = JSON.parse(JSON.stringify(origin_arr));
 deep_copy_1[4].name = 'lili';

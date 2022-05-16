@@ -54,6 +54,12 @@ arr = [
   '',
   new Date(),
   /[1-9]/g,
+  () => {
+    return '()=>void';
+  },
+  function () {
+    return 'funcs';
+  },
 ];
 
 arr.push(arr);
