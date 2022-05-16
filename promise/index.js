@@ -510,6 +510,11 @@ console.log('-------------- Promise --------------');
 });
 
 // Case 4-4
+// Promise.all()的作用是接收一组异步任务，然后并行执行异步任务，并且在所有异步操作执行完后才执行回调。
+// .race()的作用也是接收一组异步任务，然后并行执行异步任务，只保留取第一个执行完成的异步操作的结果，其他的方法仍在执行，不过执行结果会被抛弃。
+// Promise.all().then()结果中数组的顺序和Promise.all()接收到的数组顺序一致。
+// all和race传入的数组中如果有会抛出异常的异步任务，那么只有最先抛出的错误会被捕获，并且是被then的第二个参数或者后面的catch捕获；但并不会影响数组中其它的异步任务的执行。
+
 (function () {
   function runAsync(x) {
     const p = new Promise((r) => setTimeout(() => r(x, console.log(x)), 1000));
@@ -528,4 +533,198 @@ console.log('-------------- Promise --------------');
     .catch((err) => console.log('err', err));
 });
 
-//
+// Case 5-1
+(function () {
+  async function async1() {
+    console.log('async1 start');
+    // await 阻塞后面的代码执行
+    await async2();
+    console.log('async1 end');
+  }
+
+  async function async2() {
+    console.log('async2');
+  }
+
+  async1();
+
+  console.log('start');
+});
+
+// Case 5-2
+(function () {
+  async function async1() {
+    console.log('async1 start');
+    await async2();
+    console.log('async1 end');
+  }
+
+  async function async2() {
+    setTimeout(() => {
+      console.log('timer');
+    }, 0);
+
+    console.log('async2');
+  }
+
+  async1();
+
+  console.log('start');
+});
+
+// Case 5-3
+(function () {
+  async function async1() {
+    console.log('async1 start');
+    await async2();
+    console.log('async1 end');
+    setTimeout(() => {
+      console.log('timer1');
+    }, 0);
+  }
+
+  async function async2() {
+    setTimeout(() => {
+      console.log('timer2');
+    }, 0);
+    console.log('async2');
+  }
+
+  async1();
+
+  setTimeout(() => {
+    console.log('timer3');
+  }, 0);
+
+  console.log('start');
+});
+
+// Case 5-4
+(function () {
+  async function async1() {
+    console.log('async1 start');
+    await new Promise((resolve) => {
+      console.log('promise1');
+      // resolve 有和没有的区别
+      // resolve('promise1');
+    });
+
+    console.log('async1 success');
+    return 'async1 end';
+  }
+
+  console.log('srcipt start');
+
+  async1().then((res) => console.log('then ::', res));
+
+  console.log('srcipt end');
+});
+
+// Case 5-5
+(function () {
+  async function async1() {
+    console.log('async1 start');
+    await new Promise((resolve) => {
+      console.log('promise1');
+      resolve('promise1 resolve');
+    }).then((res) => console.log(res));
+
+    console.log('async1 success');
+    return 'async1 end';
+  }
+
+  console.log('srcipt start');
+
+  async1().then((res) => console.log(res));
+
+  console.log('srcipt end');
+});
+
+// Case 5-6
+(function () {
+  async function async1() {
+    console.log('async1 start');
+    await new Promise((resolve) => {
+      console.log('promise1');
+      resolve('promise resolve');
+    });
+    console.log('async1 success');
+    return 'async1 end';
+  }
+  console.log('srcipt start');
+  async1().then((res) => {
+    console.log(res);
+  });
+  new Promise((resolve) => {
+    console.log('promise2');
+    setTimeout(() => {
+      console.log('timer');
+    });
+  });
+});
+
+// Case 5-7
+(function () {
+  async function async1() {
+    console.log('async1 start');
+    await async2();
+    console.log('async1 end');
+  }
+
+  async function async2() {
+    console.log('async2');
+  }
+
+  console.log('script start');
+
+  setTimeout(function () {
+    console.log('setTimeout');
+  }, 0);
+
+  async1();
+
+  new Promise(function (resolve) {
+    console.log('promise1');
+    resolve();
+  }).then(function () {
+    console.log('promise2');
+  });
+  console.log('script end');
+});
+
+// Case 5-8
+// 注意 await testSometing 的返回值
+(function () {
+  async function testSometing() {
+    console.log('执行testSometing');
+    return 'testSometing';
+  }
+
+  async function testAsync() {
+    console.log('执行testAsync');
+    return Promise.resolve('hello async');
+  }
+
+  async function test() {
+    console.log('test start...');
+    const v1 = await testSometing();
+    console.log(v1);
+    const v2 = await testAsync();
+    console.log(v2);
+    console.log(v1, v2);
+  }
+
+  test();
+
+  var promise = new Promise((resolve) => {
+    console.log('promise start...');
+    resolve('promise');
+  });
+
+  promise.then((val) => console.log(val));
+
+  console.log('test end...');
+});
+
+// Case 6-1
+(function () {});
