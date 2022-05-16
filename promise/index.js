@@ -727,4 +727,261 @@ console.log('-------------- Promise --------------');
 });
 
 // Case 6-1
-(function () {});
+// 如果在async函数中抛出了错误，则终止错误结果，不会继续向下执行。
+(function () {
+  async function async1() {
+    await async2();
+    console.log('async1');
+    return 'async1 success';
+  }
+
+  async function async2() {
+    return new Promise((resolve, reject) => {
+      console.log('async2');
+      reject('error');
+    });
+  }
+
+  async1().then((res) => console.log(res));
+});
+
+// Case 6-2
+(function () {
+  async function async1() {
+    try {
+      await Promise.reject('error!!!');
+    } catch (e) {
+      console.log(e);
+    }
+
+    console.log('async1');
+    return Promise.resolve('async1 success');
+  }
+
+  async1().then((res) => console.log(res));
+
+  console.log('script start');
+});
+
+// Case 7-1
+(function () {
+  const first = () =>
+    new Promise((resolve, reject) => {
+      console.log(3);
+
+      let p = new Promise((resolve, reject) => {
+        console.log(7);
+
+        setTimeout(() => {
+          console.log(5);
+          resolve(6);
+          console.log(p);
+        }, 0);
+
+        resolve(1);
+      });
+
+      resolve(2);
+
+      p.then((arg) => {
+        console.log(arg);
+      });
+    });
+
+  first().then((arg) => {
+    console.log(arg);
+  });
+
+  console.log(4);
+});
+
+// Case 7-2
+(function () {
+  const async1 = async () => {
+    console.log('async1');
+
+    setTimeout(() => {
+      console.log('timer1');
+    }, 2000);
+
+    await new Promise((resolve) => {
+      console.log('promise1');
+
+      // resolve 加上 和 去掉有什么区别
+      resolve('promise1 resolve');
+    });
+
+    console.log('async1 end');
+
+    return 'async1 success';
+  };
+
+  console.log('script start');
+
+  async1().then((res) => console.log(res));
+
+  console.log('script end');
+
+  Promise.resolve(1)
+    .then(2)
+    .then(Promise.resolve(3))
+    .catch(4)
+    .then((res) => console.log(res));
+
+  setTimeout(() => {
+    console.log('timer2');
+  }, 1000);
+});
+
+// Case 7-3
+(function () {
+  const p1 = new Promise((resolve) => {
+    setTimeout(() => {
+      resolve('resolve3');
+      console.log('timer1');
+    }, 0);
+
+    resolve('resovle1');
+    resolve('resolve2');
+  })
+    .then((res) => {
+      console.log(res);
+      setTimeout(() => {
+        console.log(p1);
+      }, 1000);
+
+      // 返回 return 会发生什么
+      // return 1;
+    })
+    .finally((res) => {
+      console.log('finally', res);
+    });
+});
+
+/**
+ * Case 8-1 使用Promise实现每隔1秒输出1,2,3
+ * 思路: 在 Promise 后面叠加 then，每隔 1s 就输出
+ */
+
+const case8_1_arr = [1, 2, 3];
+
+// Case 8-1-1 拼接 then
+(function () {
+  Promise.resolve()
+    .then(() => {
+      setTimeout(() => {
+        console.log('1');
+      }, 1000);
+    })
+    .then(() => {
+      setTimeout(() => {
+        console.log('2');
+      }, 2000);
+    })
+    .then(() => {
+      setTimeout(() => {
+        console.log('3');
+      }, 3000);
+    });
+});
+
+// Case 8-1-2 直接用 setTimeout 输出
+(function () {
+  case8_1_arr.map((x, i) => {
+    setTimeout(() => {
+      console.log(x);
+    }, i * 1000);
+  });
+});
+
+// Case 8-1-3 使用 Promise,拼接 then 后
+(function () {
+  case8_1_arr.reduce((p, x) => {
+    return p.then(() => {
+      return new Promise((r) => {
+        setTimeout(() => {
+          r(console.log(x));
+        }, 1000);
+      });
+    });
+  }, Promise.resolve());
+});
+
+// Case 8-1-4 使用 Promise, 拼接 then 后
+(function () {
+  case8_1_arr.reduce(async (p, x) => {
+    await p;
+
+    const result = await new Promise((r) => {
+      setTimeout(() => {
+        r(console.log(x));
+      }, 1000);
+    });
+
+    return result;
+  }, Promise.resolve());
+});
+
+/**
+ * Case 8-2 使用Promise实现红绿灯交替重复亮
+ * 红灯3秒亮一次，黄灯2秒亮一次，绿灯1秒亮一次；如何让三个灯不断交替重复亮灯？
+ */
+
+function red() {
+  console.log('red :: ', new Date().getSeconds());
+}
+
+function green() {
+  console.log('green :: ', new Date().getSeconds());
+}
+
+function yellow() {
+  console.log('yellow ::', new Date().getSeconds());
+}
+
+// Case 8-2-1
+(function () {
+  let arr = [red, green, yellow];
+
+  console.log('start ::', new Date().getSeconds());
+
+  arr.reduce((p, cb) => {
+    return p.then(() => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          cb();
+          resolve();
+        }, (3 - arr.indexOf(cb)) * 1000);
+      });
+    });
+  }, Promise.resolve());
+});
+
+// Case 8-2-2 通过 resolve 和 then 来控制
+
+(function () {
+  const light = function (timer, cb) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        cb();
+        resolve();
+      }, timer);
+    });
+  };
+
+  const step = function () {
+    console.log('start :: ', new Date().getSeconds());
+    Promise.resolve()
+      .then(() => {
+        return light(3000, red);
+      })
+      .then(() => {
+        return light(2000, green);
+      })
+      .then(() => {
+        return light(1000, yellow);
+      });
+  };
+
+  step();
+});
