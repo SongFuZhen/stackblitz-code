@@ -3,12 +3,12 @@
  * 思路:
  * 如果是 原始类型，直接返回
  * 如果是对象，需要处理
- * 如果是循环引用对象，直接从 map 中返回
+ * 如果是循环引用对象，circular reference, 直接从 map 中返回
  * 使用 for...in 进行循环赋值
  */
 
 function deep_clone(obj, map = new Map()) {
-  if (obj === null) {
+  if (obj === null || obj instanceof Date || obj instanceof RegExp) {
     return obj;
   }
 
@@ -43,14 +43,20 @@ function deep_clone(obj, map = new Map()) {
   return cloneObj;
 }
 
-const arr = [
+let arr = [];
+
+arr = [
   1,
   2,
   { name: 'tom', company: { name: 'baidu' } },
   undefined,
   null,
   '',
+  new Date(),
+  /[1-9]/g,
 ];
+
+arr.push(arr);
 
 const test_1 = deep_clone(arr);
 test_1[2].name = 'jerry';
