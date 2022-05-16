@@ -68,8 +68,8 @@ console.log('deep_copy_2 ::', deep_copy_2, ', origin_arr ::', origin_arr);
 
 // 使用 jQuery.extends 方法
 
-import { $ } from 'http://code.jquery.com/jquery-2.1.1.min.js';
-// require('http://code.jquery.com/jquery-2.1.1.min.js');
+// import { $ } from 'http://code.jquery.com/jquery-2.1.1.min.js';
+var j = require('http://code.jquery.com/jquery-2.1.1.min.js');
 // import * as $ from 'https://cdn.skypack.dev/jquery';
 
 const deep_copy_3 = $.extends(true, {}, origin_arr);
