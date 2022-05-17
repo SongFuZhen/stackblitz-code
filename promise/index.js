@@ -1138,6 +1138,82 @@ function yellow() {
 
 /**
  * 8-5 限制异步操作的并发个数并尽可能快的完成全部
+ * 但有一个要求，任何时刻同时下载的链接数量不可以超过3个
+ * 思路:
+ * 使用 Promise.race 同时请求 limitCount 数量的图片
+ * 请求完成一个，返回请求完成的 位置 = 数组下标
+ * 然后剩余图片按照顺序，替换已经完成的位置 = 数组下标，循环
+ * 最后，剩余三个图片，使用 Promise.all 同时请求
+ * 完成
  */
 
 // Case 8-5
+(function () {
+  var urls = [
+    'https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/2/28/1708b0d2d7baa165~tplv-t2oaga2asx-zoom-in-crop-mark:1304:0:0:0.awebp',
+    'https://image-static.segmentfault.com/127/150/1271505701-5a659863bb046_fix732',
+    'https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4a61ca07672a45d3aecf382100cc9719~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.awebp',
+    'https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/55df6cb63d3346be9ec1f572a1514853~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.awebp',
+    'https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/56c5c43d1c584ed4b8e4cce8855bab52~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.awebp',
+    'https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1e15fc609aa84eac973c5b8ff163c11c~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.awebp',
+    'https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/eb543f2fdc634e29add495b8f2ff048f~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.awebp',
+    'https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0ff1ec224244427ba9f15abecbd668fe~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.awebp',
+    'https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e35285a8d23a4a4380676aeb681e815d~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.awebp',
+    'https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b74c746d1459403382fd0bbc1d96aeca~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.awebp',
+    'https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/77972f24d69243bb93679f155f305095~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.awebp',
+  ];
+
+  function loadImg(url) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = function () {
+        console.log('第 ' + urls.indexOf(url) + ' 张图片加载完成');
+        resolve(img);
+      };
+      img.onerror = function () {
+        reject(new Error('Could not load image at' + url));
+      };
+      img.src = url;
+    });
+  }
+
+  function loadImages(urls, handler, count) {
+    const sequence = [].concat(urls);
+
+    const promises = sequence.splice(0, count).map((url, index) => {
+      return handler(url).then(() => {
+        return index;
+      });
+    });
+
+    return sequence
+      .reduce((p, url) => {
+        return p
+          .then(() => {
+            console.log('promises.length', promises.length);
+            return Promise.race(promises);
+          })
+          .then((fastestIndex) => {
+            console.log('load', fastestIndex, urls.indexOf(url));
+            promises[fastestIndex] = handler(url).then(() => {
+              return fastestIndex;
+            });
+          })
+          .catch((err) => {
+            console.log('err', err);
+          });
+      }, Promise.resolve())
+      .then(() => {
+        console.log('promises.length all', promises.length);
+        return Promise.all(promises);
+      });
+  }
+
+  loadImages(urls, loadImg, 3)
+    .then((res) => {
+      console.log('ddd', res);
+    })
+    .catch((err) => {
+      console.log('error', err);
+    });
+});
