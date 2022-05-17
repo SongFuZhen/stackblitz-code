@@ -981,7 +981,163 @@ function yellow() {
       .then(() => {
         return light(1000, yellow);
       });
+    // .then(() => {
+    //   step();
+    // });
   };
 
   step();
 });
+
+/**
+ * 实现 MergePromise，相当于 Promise.all
+ */
+
+// Case 8-3-1
+
+(function () {
+  const time = (timer) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, timer);
+    });
+  };
+
+  const ajax1 = () =>
+    time(2000).then(() => {
+      console.log(1);
+      return 1;
+    });
+
+  const ajax2 = () =>
+    time(1000).then(() => {
+      console.log(2);
+      return 2;
+    });
+
+  const ajax3 = () =>
+    time(1000).then(() => {
+      console.log(3);
+      return 3;
+    });
+
+  function mergePromise(arr) {
+    // 在这里写代码
+
+    return new Promise(async (resolve) => {
+      let data = [];
+      await arr.reduce((p, x) => {
+        return p.then(() => {
+          return x().then((res) => {
+            data.push(res);
+            // return data;
+          });
+        });
+      }, Promise.resolve());
+
+      resolve(data);
+    });
+  }
+
+  mergePromise([ajax1, ajax2, ajax3]).then((data) => {
+    console.log('done');
+    console.log(data); // data 为 [1, 2, 3]
+  });
+
+  // 要求分别输出
+  // 1
+  // 2
+  // 3
+  // done
+  // [1, 2, 3]
+});
+
+// Case 8-3-2
+
+(function () {
+  const time = (timer) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, timer);
+    });
+  };
+
+  const ajax1 = () =>
+    time(2000).then(() => {
+      console.log(1);
+      return 1;
+    });
+
+  const ajax2 = () =>
+    time(1000).then(() => {
+      console.log(2);
+      return 2;
+    });
+
+  const ajax3 = () =>
+    time(1000).then(() => {
+      console.log(3);
+      return 3;
+    });
+
+  function mergePromise(arr) {
+    // 在这里写代码
+
+    const data = [];
+    let promise = Promise.resolve();
+
+    arr.forEach((ajax) => {
+      promise = promise.then(ajax).then((res) => {
+        data.push(res);
+        return data;
+      });
+    });
+
+    return promise;
+  }
+
+  mergePromise([ajax1, ajax2, ajax3]).then((data) => {
+    console.log('done');
+    console.log(data); // data 为 [1, 2, 3]
+  });
+
+  // 要求分别输出
+  // 1
+  // 2
+  // 3
+  // done
+  // [1, 2, 3]
+});
+
+/**
+ * 8-4 封装一个异步加载图片的方法
+ */
+
+// Case 8-4-1
+(function () {
+  function loadImg(url) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = function () {
+        console.log('一张图片加载完成');
+        resolve(img);
+      };
+      img.onerror = function () {
+        reject(new Error('Could not load image at' + url));
+      };
+      img.src = url;
+    });
+  }
+
+  loadImg(
+    'https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/2/28/1708bb0d2846ea40~tplv-t2oaga2asx-zoom-in-crop-mark:1304:0:0:0.awebp'
+  );
+});
+
+/**
+ * 8-5 限制异步操作的并发个数并尽可能快的完成全部
+ */
+
+// Case 8-5
