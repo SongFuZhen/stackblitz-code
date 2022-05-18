@@ -1,9 +1,7 @@
 // 'use strict';
 
 // This
-console.log(
-  '-------------- This, 最好使用 VSCode 进行运行，StackBlitz 会自动包裹一个 function, 导致 this 指向不准确 --------------'
-);
+console.log('-------------- This --------------');
 
 // Case 1-1
 (function () {
@@ -32,14 +30,16 @@ console.log(
 });
 
 // Case 1-3
-let a = 10;
-const b = 20;
+(function () {
+  let a = 10;
+  const b = 20;
 
-// function foo() {
-//   console.log(this.a);
-//   console.log(this.b);
-// }
+  function foo() {
+    console.log(this.a);
+    console.log(this.b);
+  }
 
-// foo();
+  foo();
 
-console.log(window.a);
+  console.log(window.a);
+})();
