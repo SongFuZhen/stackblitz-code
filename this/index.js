@@ -121,7 +121,7 @@ console.log('-------------- This --------------');
   var foo2 = obj.foo;
 
   obj.foo(); // 1
-  foo2(); // 2
+  foo2();
 });
 
 // Case 3-2
@@ -140,7 +140,7 @@ console.log('-------------- This --------------');
 
   obj.foo(); // 1
 
-  foo2(); // 2
+  foo2();
 
   obj2.foo2(); // 3
 });
@@ -197,7 +197,7 @@ console.log('-------------- This --------------');
   var obj = { a: 1 };
   var a = 2;
 
-  foo(); // 2
+  foo();
   foo.call(obj); // 1
   foo.apply(obj); // 1
   foo.bind(obj); // function
@@ -235,8 +235,8 @@ console.log('-------------- This --------------');
 
   var a = 3;
 
-  obj2.foo1(); // 2
-  obj2.foo2(); // window, 3
+  obj2.foo1();
+  obj2.foo2();
 });
 
 // Case 4-4
@@ -265,8 +265,8 @@ console.log('-------------- This --------------');
 
   var a = 3;
 
-  obj2.foo1(); // 2
-  obj2.foo2(); // obj1, 1
+  obj2.foo1();
+  obj2.foo2();
 });
 
 // Case 4-5
@@ -305,7 +305,7 @@ console.log('-------------- This --------------');
   var obj = { a: 1 };
   var a = 2;
 
-  foo(); // 2
+  foo();
   foo.call(obj); // 1
   foo().call(obj); // Cannot read properties of undefined
 });
@@ -323,9 +323,9 @@ console.log('-------------- This --------------');
   var obj = { a: 1 };
   var a = 2;
 
-  foo(); // 2
+  foo();
   foo.call(obj); // 1
-  foo().call(obj); // 2, 1
+  foo().call(obj);
 });
 
 // Case 4-8
@@ -339,7 +339,7 @@ console.log('-------------- This --------------');
   var obj = { a: 1 };
   var a = 2;
 
-  foo(); // 2
+  foo();
   foo.bind(obj); //
   foo().bind(obj); // 2
 });
@@ -376,9 +376,9 @@ console.log('-------------- This --------------');
 
   var obj2 = { a: 'obj2' };
 
-  obj.foo()(); // foo: obj, inner: window
-  obj.foo.call(obj2)(); // foo: obj2, inner: window
-  obj.foo().call(obj2); // foo: obj, inner: obj2
+  obj.foo()();
+  obj.foo.call(obj2)();
+  obj.foo().call(obj2);
 });
 
 // Case 4-11
@@ -396,8 +396,8 @@ console.log('-------------- This --------------');
   var a = 2;
   var obj2 = { a: 3 };
 
-  obj.foo(a).call(obj2, 1); // 3 + 2 + 1
-  obj.foo.call(obj2)(1); // 2 + 3 + 1
+  obj.foo(a).call(obj2, 1);
+  obj.foo.call(obj2)(1);
 });
 
 /**
@@ -421,8 +421,8 @@ console.log('-------------- This --------------');
     foo1.call(obj);
   };
 
-  foo2(); // 2
-  foo2.call(window); // 2
+  foo2();
+  foo2.call(window);
 });
 
 // Case 5-2
@@ -502,8 +502,8 @@ console.log('-------------- This --------------');
   }
 
   var person1 = new Person('person1');
-  person1.foo1(); // person1
-  person1.foo2()(); // ''
+  person1.foo1();
+  person1.foo2()();
 });
 
 // Case 6-3
@@ -531,8 +531,8 @@ console.log('-------------- This --------------');
   };
 
   var person1 = new Person('person1');
-  person1.foo()(); // person1 \n window
-  person2.foo()(); // person2 \n window
+  person1.foo()();
+  person2.foo()();
 });
 
 // Case 6-4
@@ -550,8 +550,8 @@ console.log('-------------- This --------------');
   var person1 = new Person('person1');
   var person2 = new Person('person2');
 
-  person1.foo.call(person2)(); // person2 \n window
-  person1.foo().call(person2); // person1 \n person2
+  person1.foo.call(person2)();
+  person1.foo().call(person2);
 });
 
 /**
@@ -560,6 +560,17 @@ console.log('-------------- This --------------');
  * 字面量创建的对象，作用域是window，如果里面有箭头函数属性的话，this指向的是window
  * 构造函数创建的对象，作用域是可以理解为是这个构造函数，且这个构造函数的this是指向新建的对象的，因此this指向这个对象。
  * 箭头函数的this是无法通过bind、call、apply来直接修改，但是可以通过改变作用域中this的指向来间接修改。
+ *
+ * 特点:
+ * 1. 箭头函数写代码拥有更加简洁的语法(当然也有人认为这是缺点)
+ * 2. this由外层作用域决定，所以在某些场合我们不需要写类似const that = this这样的代码
+ *
+ * 避免使用场景
+ * 1. 使用箭头函数定义对象的方法
+ * 2. 定义原型方法
+ * 3. 构造函数使用箭头函数
+ * 4. 作为事件的回调函数
+ *
  * 1. 字面量对象中普通函数与箭头函数的区别: 只有一层函数的题目
  * 2. 字面量对象中普通函数与箭头函数的区别：函数嵌套的题目
  * 3. 构造函数对象中普通函数和箭头函数的区别：只有一层函数的题目
@@ -584,8 +595,8 @@ console.log('-------------- This --------------');
   };
 
   var name = 'window';
-  obj.foo1(); // window
-  obj.foo2()(); // obj \n obj
+  obj.foo1();
+  obj.foo2()();
 });
 
 // Case 7-2
@@ -605,8 +616,8 @@ console.log('-------------- This --------------');
     },
   };
 
-  obj1.foo(); // obj1
-  obj2.foo(); // window
+  obj1.foo();
+  obj2.foo();
 });
 
 // Case 7-3
@@ -652,10 +663,10 @@ console.log('-------------- This --------------');
     },
   };
 
-  obj1.foo()(); // obj1 \n window
-  obj2.foo()(); // obj2 \n obj2
-  obj3.foo()(); // window \n window
-  obj4.foo()(); // window \n window
+  obj1.foo()();
+  obj2.foo()();
+  obj3.foo()();
+  obj4.foo()();
 });
 
 // Case 7-4
@@ -681,9 +692,9 @@ console.log('-------------- This --------------');
   };
 
   var person1 = new Person('person1');
-  person1.foo1(); // person1
-  person1.foo2(); // person1
-  person2.foo2(); // window
+  person1.foo1();
+  person1.foo2();
+  person2.foo2();
 });
 
 // Case 7-5
@@ -717,10 +728,10 @@ console.log('-------------- This --------------');
     };
   }
   var person1 = new Person('person1');
-  person1.foo1()(); // person1 \n window
-  person1.foo2()(); // person1 \n person1
-  person1.foo3()(); // person1 \n window
-  person1.foo4()(); // person1 \n person1
+  person1.foo1()();
+  person1.foo2()();
+  person1.foo3()();
+  person1.foo4()();
 });
 
 // Case 7-6
@@ -747,8 +758,146 @@ console.log('-------------- This --------------');
     name: 'obj2',
   };
 
-  obj1.foo1.call(obj2)(); // obj2 \n obj2
-  obj1.foo1().call(obj2); // obj1 \n obj1
-  obj1.foo2.call(obj2)(); // window \n window
-  obj1.foo2().call(obj2); // window \n obj2
-})();
+  obj1.foo1.call(obj2)();
+  obj1.foo1().call(obj2);
+  obj1.foo2.call(obj2)();
+  obj1.foo2().call(obj2);
+});
+
+/**
+ * 综合题
+ */
+
+// Case 8-1
+(function () {
+  var name = 'window';
+
+  var person1 = {
+    name: 'person1',
+    foo1: function () {
+      console.log(this.name);
+    },
+    foo2: () => console.log(this.name),
+    foo3: function () {
+      return function () {
+        console.log(this.name);
+      };
+    },
+    foo4: function () {
+      return () => {
+        console.log(this.name);
+      };
+    },
+  };
+
+  var person2 = { name: 'person2' };
+
+  person1.foo1();
+  person1.foo1.call(person2);
+
+  person1.foo2();
+  person1.foo2.call(person2);
+
+  person1.foo3()();
+  person1.foo3.call(person2)();
+  person1.foo3().call(person2);
+
+  person1.foo4()();
+  person1.foo4.call(person2)();
+  person1.foo4().call(person2);
+});
+
+// Case 8-2
+(function () {
+  var name = 'window';
+
+  function Person(name) {
+    this.name = name;
+
+    this.foo1 = function () {
+      console.log(this.name);
+    };
+
+    this.foo2 = () => console.log(this.name);
+
+    this.foo3 = function () {
+      return function () {
+        console.log(this.name);
+      };
+    };
+
+    this.foo4 = function () {
+      return () => {
+        console.log(this.name);
+      };
+    };
+  }
+
+  var person1 = new Person('person1');
+  var person2 = new Person('person2');
+
+  person1.foo1();
+  person1.foo1.call(person2);
+
+  person1.foo2();
+  person1.foo2.call(person2);
+
+  person1.foo3()();
+  person1.foo3.call(person2)();
+  person1.foo3().call(person2);
+
+  person1.foo4()();
+  person1.foo4.call(person2)();
+  person1.foo4().call(person2);
+});
+
+// Case 8-3
+// this 永远指向最后调用它的那个对象。
+(function () {
+  var name = 'window';
+
+  function Person(name) {
+    this.name = name;
+
+    this.obj = {
+      name: 'obj',
+
+      foo1: function () {
+        return function () {
+          console.log(this.name);
+        };
+      },
+
+      foo2: function () {
+        return () => {
+          console.log(this.name);
+        };
+      },
+    };
+  }
+
+  var person1 = new Person('person1');
+  var person2 = new Person('person2');
+
+  person1.obj.foo1()();
+  person1.obj.foo1.call(person2)();
+  person1.obj.foo1().call(person2);
+
+  person1.obj.foo2()();
+  person1.obj.foo2.call(person2)();
+  person1.obj.foo2().call(person2);
+});
+
+// Case 8-4
+(function () {
+  function foo() {
+    console.log(this.a);
+  }
+
+  var a = 2;
+
+  (function () {
+    'use strict';
+    foo();
+  })();
+});
