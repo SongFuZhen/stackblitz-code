@@ -8,6 +8,7 @@ appDiv.innerHTML = `<h1>Javascript</h1>`;
 // Import JS
 
 // This
+import './this/new.js';
 import './this/index.js';
 
 // Promise
