@@ -42,4 +42,4 @@ console.log('-------------- This --------------');
   foo();
 
   console.log(window.a);
-})();
+});
