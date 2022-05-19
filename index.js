@@ -1,14 +1,21 @@
-const express = require('express');
-const app = express();
-const port = 3010;
-const path = require('path');
+console.log(`
+  Your random number is: ${Math.random()}
+  (edit any file to auto-restart this script)
+`);
 
-app.use(express.static('static'));
+console.log('hello world');
 
-app.get('/', (req, res) => {
-  res.sendFile(path.resolve('pages/index.html'));
-});
+// const http = require('http');
+// const server = http.createServer();
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
-});
+// server.on('request', (req, res) => {
+//   if (req.url === '/') {
+//     res.setHeader('Content-Type', 'text/plain');
+//     res.setHeader('Content-Length', 1);
+//     res.write('helloworld');
+//   }
+// });
+
+// server.listen(18999, () => {
+//   console.log('启动成功');
+// });
