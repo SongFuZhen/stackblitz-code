@@ -9,6 +9,14 @@ app.get('/', (req, res) => {
   res.sendFile(path.resolve('pages/index.html'));
 });
 
+app.get('/data', function (req, res) {
+  let { a, b, callback } = req.query;
+
+  console.log(a, b);
+
+  res.end(`${callback}('数据包')`);
+});
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
