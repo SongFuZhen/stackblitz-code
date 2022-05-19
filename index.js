@@ -1,25 +1,14 @@
-// Import stylesheets
-import './style.css';
+const express = require('express');
+const app = express();
+const port = 3010;
+const path = require('path');
 
-// Write Javascript code!
-const appDiv = document.getElementById('app');
-appDiv.innerHTML = `<h1>Javascript</h1>`;
+app.use(express.static('static'));
 
-// Import JS
+app.get('/', (req, res) => {
+  res.sendFile(path.resolve('pages/index.html'));
+});
 
-// This
-import './this/new.js';
-import './this/index.js';
-
-// Promise
-import './promise/index.js';
-
-// Prototype
-import './proto/index.js';
-
-// Copy
-import './copy/index.js';
-import './copy/deep_clone.js';
-
-// Closure
-import './closure/index.js';
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`);
+});
