@@ -21,7 +21,7 @@ const run = (arr) => {
 (function () {
   const arr = [1, 2, 3];
   run(arr);
-})();
+});
 
 // #endregion
 
@@ -72,6 +72,70 @@ const step = () => {
 // #endregion
 
 // #region 实现 mergePromise 函数
+
+const time = (timer) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, timer);
+  });
+};
+
+const ajax1 = () =>
+  time(2000).then(() => {
+    console.log(1, new Date().getSeconds());
+    return 1;
+  });
+
+const ajax2 = () =>
+  time(2000).then(() => {
+    console.log(2, new Date().getSeconds());
+    return 2;
+  });
+
+const ajax3 = () =>
+  time(4000).then(() => {
+    console.log(3, new Date().getSeconds());
+    return 3;
+  });
+
+function mergePromise(arr) {
+  const data = [];
+
+  // return arr.reduce((p, x) => {
+  //   return p.then(() => {
+  //     return new Promise((r) => {
+  //       x().then((d) => {
+  //         data.push(d);
+  //         r(data);
+  //       });
+  //     });
+  //   });
+  // }, Promise.resolve());
+
+  let promise = Promise.resolve();
+
+  arr.forEach((ajax) => {
+    promise = promise.then(ajax).then((d) => {
+      data.push(d);
+      return data;
+    });
+  });
+
+  return promise;
+}
+
+mergePromise([ajax1, ajax2, ajax3]).then((data) => {
+  console.log('done', new Date().getSeconds());
+  console.log(data, new Date().getSeconds());
+});
+
+// 要求分别输出
+// 1
+// 2
+// 3
+// done
+// [1, 2, 3]
 
 // #endregion
 
