@@ -3,9 +3,10 @@ console.log('2022-5-23');
 
 // #region Promise 的应用
 
-// Case1 使用 Promise 实现每隔 1s 输出 1，2，3
+// #region Case1 使用 Promise 实现每隔 1s 输出 1，2，3
+
 const run = (arr) => {
-  arr.reduce((p, x) => {
+  return arr.reduce((p, x) => {
     return p.then(() => {
       return new Promise((resolve) => {
         setTimeout(() => {
@@ -20,9 +21,11 @@ const run = (arr) => {
 (function () {
   const arr = [1, 2, 3];
   run(arr);
-});
+})();
 
-// Case2: 使用Promise实现红绿灯交替重复亮, 红灯3秒亮一次，黄灯2秒亮一次，绿灯1秒亮一次
+// #endregion
+
+// #region Case2: 使用Promise实现红绿灯交替重复亮, 红灯3秒亮一次，黄灯2秒亮一次，绿灯1秒亮一次
 
 function red() {
   console.log('red', new Date().getSeconds());
@@ -55,15 +58,22 @@ const step = () => {
     })
     .then(() => {
       return light(1000, green);
-    })
-    .then(() => {
-      step();
     });
+  // .then(() => {
+  //   step();
+  // });
 };
 
 (function () {
+  console.log('start', new Date().getSeconds());
   step();
 });
+
+// #endregion
+
+// #region 实现 mergePromise 函数
+
+// #endregion
 
 // #endregion
 
