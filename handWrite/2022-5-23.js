@@ -63,7 +63,7 @@ const step = () => {
 
 (function () {
   step();
-})();
+});
 
 // #endregion
 
