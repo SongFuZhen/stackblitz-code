@@ -1,10 +1,7 @@
 // 手写
 console.log('2022-5-23');
 
-
-
-
-// 深拷贝 - Success
+// #region 深拷贝
 
 const deep_clone = (obj, map = new Map()) => {
   if (obj === null || obj instanceof Date || obj instanceof RegExp) {
@@ -46,10 +43,14 @@ arr = [
   function () {},
 ];
 
-console.log('origin arr', arr);
+(function () {
+  console.log('origin arr', arr);
 
-const cloneArr = deep_clone(arr);
+  const cloneArr = deep_clone(arr);
 
-arr[5].name = 'jerry';
-console.log('change arr', arr);
-console.log('clone arr ', cloneArr);
+  arr[5].name = 'jerry';
+  console.log('change arr', arr);
+  console.log('clone arr ', cloneArr);
+});
+
+// #endregion
