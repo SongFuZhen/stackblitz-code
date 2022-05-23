@@ -7,6 +7,8 @@ appDiv.innerHTML = `<h1>Javascript</h1>`;
 
 // Import JS
 
+import './handWrite/2022-5-23.js';
+
 // This
 import './this/new.js';
 import './this/index.js';
