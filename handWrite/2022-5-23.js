@@ -125,9 +125,11 @@ function mergePromise(arr) {
   return promise;
 }
 
-mergePromise([ajax1, ajax2, ajax3]).then((data) => {
-  console.log('done', new Date().getSeconds());
-  console.log(data, new Date().getSeconds());
+(function () {
+  mergePromise([ajax1, ajax2, ajax3]).then((data) => {
+    console.log('done', new Date().getSeconds());
+    console.log(data, new Date().getSeconds());
+  });
 });
 
 // 要求分别输出
