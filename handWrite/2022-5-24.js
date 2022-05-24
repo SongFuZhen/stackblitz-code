@@ -182,6 +182,29 @@ const step = () => {
 
 (function () {
   step();
+});
+
+// #endregion
+
+// #region  使用Promise实现每隔1秒输出a,b,c
+
+(function () {
+  const arr = ['a', 'b', 'c'];
+
+  return arr
+    .reduce((p, x) => {
+      return p.then(() => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            console.log(x, new Date().getSeconds());
+            resolve(x);
+          }, 1000);
+        });
+      });
+    }, Promise.resolve())
+    .then((res) => {
+      console.log('输出完毕', res);
+    });
 })();
 
 // #endregion
