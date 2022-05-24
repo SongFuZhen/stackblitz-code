@@ -175,12 +175,13 @@ const step = () => {
       return light(1000, green);
     })
     .then(() => {
-      step();
+      // step();
+      console.log('xx');
     });
 };
 
 (function () {
   step();
-});
+})();
 
 // #endregion
