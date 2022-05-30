@@ -1,12 +1,18 @@
 console.log('--- Call ---');
 
-Function.prototype.myCall = function (context) {
+Function.prototype.my_call = function (context) {
   if (typeof this !== 'function') {
     throw new Error('Type Error');
   }
 
+  console.log('arguments', arguments);
+
   // 删除第一个个参数
-  let args = [...arguments].slice(1);
+  // const args = { ...[...arguments].slice(1) };
+  const args = [...arguments].slice(1);
+
+  console.log('args', args);
+  console.log('---', this, arguments, context);
 
   let result = null;
 
@@ -18,7 +24,10 @@ Function.prototype.myCall = function (context) {
   context.fn = this;
 
   // 执行要被调用的方法
+  // result = context.fn(...args);
   result = context.fn(...args);
+
+  console.log('context', context);
 
   // 删除手动增加的属性方法
   delete context.fn;
@@ -30,10 +39,10 @@ const obj = {
   value: 'tom',
 };
 
-function func() {
-  console.log(this.value);
+function func(age, school) {
+  console.log(this.value, age, school);
 }
 
-func.call(obj);
+func.call(obj, 10, 't');
 
-func.myCall(obj);
+func.my_call(obj, 20, 'm');
