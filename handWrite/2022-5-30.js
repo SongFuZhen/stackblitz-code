@@ -34,10 +34,10 @@ function light(timer, cb) {
       })
       .then(() => {
         return light(1000, green);
-      })
-      .then(() => {
-        step();
       });
+    // .then(() => {
+    //   step();
+    // });
   }
 
   step();
