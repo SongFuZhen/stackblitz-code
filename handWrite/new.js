@@ -4,7 +4,7 @@
 
 (function () {
   function my_new() {
-    console.log('ar', arguments);
+    console.log('ar', arguments, arguments.callee);
     // 1、获取构造函数，并且删除 arguments 中的第一项
     var Con = Array.prototype.shift.call(arguments);
 
@@ -13,22 +13,24 @@
 
     // 3、使用 apply 改变构造函数中 this 的指向，实现继承，使 obj 能够访问到构造函数中的属性
     var ret = Con.apply(obj, arguments);
+    // var ret = Con.call(obj, ...arguments);
 
-    console.log('ret', arguments, ret);
+    console.log('ret', arguments, ...arguments, ret, obj);
 
     // 4、优先返回构造函数返回的对象
     return ret instanceof Object ? ret : obj;
   }
 
-  function Person(name) {
+  function Person(name, age) {
     this.name = name;
+    this.age = age;
   }
 
   Person.prototype.eat = function () {
     console.log('Eatting');
   };
 
-  var tom = my_new(Person, 'Tom');
+  var tom = my_new(Person, 'Tom', 20);
   console.log(tom); // Person{ name: 'Tom' }
   tom.eat(); // 'Eatting'
-});
+})();
