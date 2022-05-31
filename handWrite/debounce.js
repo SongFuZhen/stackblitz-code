@@ -1,19 +1,42 @@
 console.log('---Debounce---');
 
-function debounce(func, timer) {
+function debounce(func, timer, immediate) {
   let timeout;
 
-  return function () {
+  const debounced = function () {
     const context = this;
     const args = arguments;
 
-    clearTimeout(timeout);
+    if (timeout) {
+      clearTimeout(timeout);
+    }
 
-    // timeout = setTimeout(function () {
-    timeout = setTimeout(() => {
-      func.apply(context, args);
-    }, timer);
+    if (immediate) {
+      const callNow = !timeout;
+
+      timeout = setTimeout(function () {
+        console.log('timeout === null');
+        timeout = null;
+      }, timer);
+
+      if (callNow) {
+        console.log('call now');
+        return func.apply(context, args);
+      }
+    } else {
+      timeout = setTimeout(function () {
+        console.log('apply');
+        func.apply(context, args);
+      }, timer);
+    }
   };
+
+  debounced.cancel = function () {
+    clearTimeout(timeout);
+    timeout = null;
+  };
+
+  return debounced;
 }
 
 let count = 1;
@@ -33,4 +56,11 @@ function func() {
 //   func('tom');
 // };
 
-container.onmousemove = debounce(func, 1000);
+const setCount = debounce(func, 10000);
+
+container.onmousemove = setCount;
+
+// setTimeout(() => {
+//   console.log('cancel');
+//   setCount.cancel();
+// }, 3000);
