@@ -7,6 +7,7 @@ appDiv.innerHTML = `<h1>Javascript</h1>`;
 
 // Import JS
 
+import './handWrite/reduce.js';
 import './handWrite/flat_arr.js';
 import './handWrite/instanceof.js';
 import './handWrite/quickSort.js';
