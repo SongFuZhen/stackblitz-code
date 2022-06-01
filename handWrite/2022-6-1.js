@@ -150,3 +150,49 @@ const my_bind = func.my_bind(obj);
 console.log('my_bind', my_bind('tom'));
 
 // #endregion
+
+// #region 防抖  debounce
+// 在频繁操作的下，不执行，只有在停止操作一段时间后才执行
+
+// 通过 判断当前时间 和 setTimeout 执行
+function debounce(func, timer) {
+  let timeout = undefined;
+
+  const debounced = function () {
+    const context = this;
+    const args = arguments;
+
+    if (timeout) {
+      clearTimeout(timeout);
+    }
+
+    timeout = setTimeout(function () {
+      func.apply(context, args);
+    }, timer);
+  };
+
+  debounced.cancel = function () {
+    clearTimeout(timeout);
+    timeout = undefined;
+  };
+
+  return debounced;
+}
+
+(function () {
+  const divContainer = document.createElement('div');
+  divContainer.id = 'debounce_6-1';
+  divContainer.className = 'main';
+  divContainer.innerHTML = 'Debounce 6-1';
+  document.getElementById('app').appendChild(divContainer);
+
+  let count = 1;
+  function func() {
+    divContainer.innerHTML = count++;
+    console.log('count', count);
+  }
+
+  divContainer.onmousemove = debounce(func, 2000);
+})();
+
+// #endregion
