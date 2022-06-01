@@ -7,6 +7,7 @@ appDiv.innerHTML = `<h1>Javascript</h1>`;
 
 // Import JS
 
+import './handWrite/instanceof.js';
 import './handWrite/quickSort.js';
 import './handWrite/throttle.js';
 import './handWrite/debounce.js';
