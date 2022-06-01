@@ -102,7 +102,7 @@ function throttle_all(func, timer, options = {}) {
   return throttle;
 }
 
-container.onmousemove = throttle_all(func, 2000, {
-  leading: true,
-  trailing: false,
-});
+// container.onmousemove = throttle_all(func, 2000, {
+//   leading: true,
+//   trailing: false,
+// });
