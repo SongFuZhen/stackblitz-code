@@ -33,4 +33,29 @@
   var tom = my_new(Person, 'Tom', 20);
   console.log(tom); // Person{ name: 'Tom' }
   tom.eat(); // 'Eatting'
-})();
+});
+
+(function () {
+  function my_new() {
+    const Con = Array.prototype.shift.call(arguments);
+    const obj = new Object();
+    obj.__proto__ = Con.prototype;
+
+    const ret = Con.apply(obj, arguments);
+
+    return ret instanceof Object ? ret : obj;
+  }
+
+  function Person(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  Person.prototype.eat = function () {
+    console.log('Eatting');
+  };
+
+  var tom = my_new(Person, 'Tom', 20);
+  console.log(tom); // Person{ name: 'Tom' }
+  tom.eat(); // 'Eatting'
+});
