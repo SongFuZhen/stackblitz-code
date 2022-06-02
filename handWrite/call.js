@@ -46,3 +46,27 @@ function func(age, school) {
 func.call(obj, 10, 't');
 
 func.my_call(obj, 20, 'm');
+
+/**
+ * ... 和 Symbol 是 ES6 新增的，此处不用
+ */
+Function.prototype.my_call_es3 = function (context) {
+  context = context || window;
+  context.fn = this;
+
+  var args = [];
+
+  for (var i = 1; i < arguments.length; i++) {
+    args.push('arguments[' + i + ']');
+  }
+
+  console.log('args', args);
+
+  var result = eval('context.fn(' + args + ')');
+
+  delete context.fn;
+
+  return result;
+};
+
+func.my_call_es3(obj, 20, 'm');
