@@ -18,6 +18,28 @@ Function.prototype.my_bind = function (context) {
   };
 };
 
+Function.prototype.my_bind_2 = function (context) {
+  if (typeof this !== 'function') {
+    throw new Error('Type error');
+  }
+
+  var fn = this;
+  var args = Array.prototype.slice.call(arguments, 1);
+  var fNOP = function () {};
+
+  var fBound = function () {
+    var bindArgs = Array.prototype.slice.call(arguments);
+    return fn.apply(
+      this instanceof fNOP ? this : context,
+      args.concat(bindArgs)
+    );
+  };
+
+  fNOP.prototype = this.prototype;
+  fBound.prototype = new fNOP();
+  return fBound;
+};
+
 let value = 2;
 
 let foo = {
