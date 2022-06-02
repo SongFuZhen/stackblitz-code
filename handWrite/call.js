@@ -49,6 +49,7 @@ func.my_call(obj, 20, 'm');
 
 /**
  * ... 和 Symbol 是 ES6 新增的，此处不用
+ * let 和 const 也是 ES2015 新增的
  */
 Function.prototype.my_call_es3 = function (context) {
   context = context || window;
