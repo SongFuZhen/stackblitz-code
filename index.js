@@ -7,6 +7,11 @@ appDiv.innerHTML = `<h1>Javascript</h1>`;
 
 // Import JS
 
+// algorithm
+import './algorithm/arr_0-100.js';
+import './algorithm/unique.js';
+
+// hand write
 import './handWrite/unique.js';
 import './handWrite/reduce.js';
 import './handWrite/flat_arr.js';
@@ -19,7 +24,6 @@ import './handWrite/apply.js';
 import './handWrite/call.js';
 import './handWrite/new.js';
 
-// hand write
 import './handWrite/2022-6-1.js';
 import './handWrite/2022-5-31.js';
 // import './handWrite/2022-5-30.js';
