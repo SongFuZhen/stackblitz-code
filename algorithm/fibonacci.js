@@ -51,11 +51,10 @@ function fibonacci_s(n) {
   return fibonacci_s(n - 1) + fibonacci_s(n - 2);
 }
 
-[...new Array(1000).keys()].map((d) => {
+[...new Array(10).keys()].map((d) => {
   console.log(
     d,
     fibonacci_s(d) === fibonacci_while(d),
     fibonacci_s(d) === fibonacci(d)
   );
-  // console.log(d, fibonacci(d), fibonacci_while(d) === fibonacci(d));
 });
