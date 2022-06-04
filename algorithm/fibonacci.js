@@ -38,14 +38,14 @@ function fibonacci(n) {
 }
 
 // Case3: 迭代，这个算100 都算不出来
+
+let i = 1;
 function fibonacci_s(n) {
   if (n <= 1) {
     return 1;
   }
 
-  if (n === 2) {
-    return 2;
-  }
+  // console.log('n===', n, i++);
 
   return fibonacci_s(n - 1) + fibonacci_s(n - 2);
 }
@@ -58,4 +58,4 @@ function fibonacci_s(n) {
   );
 });
 
-console.log('xxxx', fibonacci_while(1000));
+console.log('xxxx', fibonacci_while(100));
