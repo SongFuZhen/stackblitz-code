@@ -8,6 +8,7 @@ appDiv.innerHTML = `<h1>Javascript</h1>`;
 // Import JS
 
 // algorithm
+import './algorithm/fibonacci.js';
 import './algorithm/arr_flat.js';
 import './algorithm/arr_0-100.js';
 import './algorithm/unique.js';
