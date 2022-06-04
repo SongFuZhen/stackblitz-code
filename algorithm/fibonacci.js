@@ -37,8 +37,7 @@ function fibonacci(n) {
   return fn(n);
 }
 
-// Case3: 迭代
-
+// Case3: 迭代，这个算100 都算不出来
 function fibonacci_s(n) {
   if (n <= 1) {
     return 1;
@@ -58,3 +57,5 @@ function fibonacci_s(n) {
     fibonacci_s(d) === fibonacci(d)
   );
 });
+
+console.log('xxxx', fibonacci_while(1000));
