@@ -11,6 +11,8 @@ function bubbleSort(arr) {
         arr[j + 1] = temp;
       }
     }
+
+    console.log(i, arr);
   }
 
   return arr;
