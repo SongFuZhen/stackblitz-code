@@ -37,6 +37,8 @@ function fibonacci(n) {
   return fn(n);
 }
 
+console.log('---222--', fibonacci(1476));
+
 // Case3: 迭代，这个算100 都算不出来
 
 let i = 1;
