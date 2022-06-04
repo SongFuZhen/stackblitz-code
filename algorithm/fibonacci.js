@@ -11,7 +11,7 @@ function fibonacci_while(n) {
     return 1;
   }
 
-  let arr = [1, 1];
+  let arr = [0, 1];
   let i = n + 1 - 2;
 
   while (i > 0) {
@@ -26,7 +26,7 @@ function fibonacci_while(n) {
 
 // Case 2: 递归
 function fibonacci(n) {
-  function fn(n, cur = 1, next = 1) {
+  function fn(n, cur = 0, next = 1) {
     if (n === 0) {
       return cur;
     } else {
@@ -42,7 +42,7 @@ function fibonacci(n) {
 let i = 1;
 function fibonacci_s(n) {
   if (n <= 1) {
-    return 1;
+    return n;
   }
 
   // console.log('n===', n, i++);
