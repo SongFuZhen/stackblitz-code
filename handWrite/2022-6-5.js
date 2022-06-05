@@ -1,5 +1,51 @@
 console.log('2022-6-5');
 
+// #region 手写 instanceof
+
+function my_instanceof(target, origin) {
+  if (typeof target !== 'object' || target === null) {
+    return false;
+  }
+
+  if (typeof origin !== 'function') {
+    throw new Error('origin must be function');
+  }
+
+  let proto = Object.getPrototypeOf(target);
+
+  while (proto) {
+    if (proto === origin.prototype) {
+      return true;
+    }
+
+    proto = Object.getPrototypeOf(proto);
+  }
+
+  return false;
+}
+
+(function () {
+  function Person(name, sex) {
+    const result = {
+      name,
+      sex,
+    };
+
+    console.log(result);
+    // return result;
+  }
+
+  const p = new Person('tom', '男');
+
+  console.log(
+    p instanceof Person,
+    Person instanceof Object,
+    my_instanceof(p, Person)
+  );
+})();
+
+// #endregion
+
 // #region 手写 new
 
 function my_new() {
