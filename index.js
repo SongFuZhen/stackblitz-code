@@ -28,6 +28,9 @@ import './handWrite/apply.js';
 import './handWrite/call.js';
 import './handWrite/new.js';
 
+// Self Test
+
+import './handWrite/2022-6-5.js';
 import './handWrite/2022-6-1.js';
 import './handWrite/2022-5-31.js';
 // import './handWrite/2022-5-30.js';
