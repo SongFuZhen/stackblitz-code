@@ -40,7 +40,8 @@ function my_instanceof(target, origin) {
   console.log(
     p instanceof Person,
     Person instanceof Object,
-    my_instanceof(p, Person)
+    my_instanceof(p, Person),
+    my_instanceof(p, Object)
   );
 })();
 
