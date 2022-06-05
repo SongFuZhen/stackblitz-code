@@ -289,3 +289,40 @@ function fibonacci_closure(n) {
 
 // #endregion
 
+// #region 快速输出 0-99
+
+// Case 1 ::
+(function () {
+  Array.from(new Array(100).keys()).map((a) => {
+    // console.log(a);
+  });
+});
+
+// Case 2 ::
+(function () {
+  [...new Array(100).keys()].map((a) => {
+    // console.log(a);
+  });
+});
+
+// Case3 :: for
+(function () {
+  for (let i = 0; i < 100; i++) {
+    // console.log(i);
+  }
+});
+
+// Case 4 :: while
+(function () {
+  function a() {
+    let n = 0;
+    while (n < 100) {
+      n = n + 1;
+      console.log(n);
+    }
+  }
+
+  a();
+});
+
+// #endregion
