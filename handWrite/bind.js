@@ -13,7 +13,7 @@ Function.prototype.my_bind = function (context) {
   return function NewFunc() {
     return fn.apply(
       this instanceof NewFunc ? this : context, // 当作构造函数的时候，this 指向实例，绑定为 this，可以让实例获得来自绑定函数的值；当作为普通函数的时候， this 指向 window，绑定为 context
-      args.concat(...arguments) // 当前的这个 arguments 是指 Fn 的参数
+      args.concat([...arguments]) // 当前的这个 arguments 是指 Fn 的参数
     );
   };
 };

@@ -38,6 +38,10 @@ function my_new() {
 
 // #region 手写 call
 Function.prototype.my_call = function (context) {
+  if (typeof this !== 'function') {
+    throw new Error('Type Error');
+  }
+
   context = context || window;
   const fnSymbol = Symbol();
   context[fnSymbol] = this;
@@ -74,6 +78,10 @@ Function.prototype.my_call = function (context) {
 // #region 手写 apply
 
 Function.prototype.my_apply = function (context) {
+  if (typeof this !== 'function') {
+    throw new Error('Type Error');
+  }
+
   context = context || window;
   const fnSymbol = Symbol();
   context[fnSymbol] = this;
@@ -111,16 +119,27 @@ Function.prototype.my_apply = function (context) {
 // #region 手写 bind
 
 Function.prototype.my_bind = function (context) {
-  context = context || window;
+  if (typeof this !== 'function') {
+    throw new Error('Type error');
+  }
+
+  // context = context || window;
 
   const args = [...arguments].slice(1);
   const fn = this;
 
   return function newFn() {
+    // const a = Array.prototype.slice.call(arguments);
+
+    // const b = [...arguments];
+
+    // console.log(a, b, JSON.stringify(a) === JSON.stringify(b));
+
     // 判断是否是空的
     return fn.apply(
-      context instanceof newFn ? this : context,
-      args.concat(...arguments)
+      this instanceof newFn ? this : context,
+      args.concat([...arguments])
+      // args.concat(Array.prototype.slice.call(arguments))
     );
   };
 };
@@ -130,19 +149,20 @@ Function.prototype.my_bind = function (context) {
     value: 1,
   };
 
-  function func(name) {
+  function func(name, sex) {
     const result = {
       value: this.value,
       name,
+      sex,
     };
 
     return result;
   }
 
-  const tom_bind = func.bind(obj)('tom');
+  const tom_bind = func.bind(obj)('tom', '男');
   console.log('---', tom_bind);
 
-  const tom_my_bind = func.my_bind(obj)('tom');
+  const tom_my_bind = func.my_bind(obj)('tom', '男');
   console.log('---', tom_my_bind);
 });
 
@@ -239,6 +259,20 @@ function flat_arr_regexp(arr) {
   console.log(flat_arr_regexp(nestedArr));
 });
 
+// Case 5 :: some
+
+function flat_arr_some(arr) {
+  while (arr.some((item) => Array.isArray(item))) {
+    arr = [].concat(...arr);
+  }
+
+  return arr;
+}
+
+(function () {
+  console.log(flat_arr_some(nestedArr));
+});
+
 // #endregion
 
 // #region 手写 fibonacci 数列
@@ -261,20 +295,17 @@ function fibonacci(n) {
 // Case 2 :: 缓存数据写法
 
 function fibonacci_closure(n) {
-  if (n < 2) {
-    return n;
-  }
-
   let arr = [0, 1];
 
   function innerFunc(n) {
-    if (typeof arr[n] !== 'number') {
-      const result = innerFunc(n - 1) + innerFunc(n - 2);
+    let result = arr[n];
+
+    if (typeof result !== 'number') {
+      result = innerFunc(n - 1) + innerFunc(n - 2);
       arr[n] = result;
-      return result;
-    } else {
-      return arr[n];
     }
+
+    return result;
   }
 
   return innerFunc(n);
@@ -317,12 +348,45 @@ function fibonacci_closure(n) {
   function a() {
     let n = 0;
     while (n < 100) {
-      n = n + 1;
       console.log(n);
+      n = n + 1;
     }
   }
 
   a();
 });
+
+// Case 5 :: length
+(function () {
+  Array.from({ length: 100 }, (v, i) => {
+    console.log(i);
+  });
+});
+
+(function () {
+  Object.keys(Array.apply(null, { length: 100 })).map((d) => {
+    console.log(parseFloat(d));
+  });
+});
+
+// #endregion
+
+// #region 冒泡排序
+
+function bubbleSort(arr) {
+  for (let i = 0; i < arr.length - 1; i++) {
+    for (let j = 0; j < arr.length - 1 - i; j++) {
+      if (arr[j] > arr[j + 1]) {
+        let temp = arr[j];
+        arr[j] = arr[j + 1];
+        arr[j + 1] = temp;
+      }
+    }
+  }
+
+  return arr;
+}
+
+// console.log(bubbleSort([1, 3, 4, 5, 6, 7, 2, 1, 22]));
 
 // #endregion
