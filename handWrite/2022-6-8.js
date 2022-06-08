@@ -17,7 +17,7 @@ function fibonacci(n) {
 
 (function () {
   console.log(fibonacci(10));
-})();
+});
 
 // #endregion
 
