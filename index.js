@@ -8,6 +8,7 @@ appDiv.innerHTML = `<h1>Javascript</h1>`;
 // Import JS
 
 // algorithm
+import './algorithm/sort/link.js';
 import './algorithm/sort/sum.js';
 import './algorithm/sort/insertSort.js';
 import './algorithm/sort/quickSort.js';
