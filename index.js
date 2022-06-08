@@ -8,6 +8,7 @@ appDiv.innerHTML = `<h1>Javascript</h1>`;
 // Import JS
 
 // algorithm
+import './algorithm/sort/insertSort.js';
 import './algorithm/sort/quickSort.js';
 import './algorithm/sort/bubbleSort.js';
 import './algorithm/fibonacci.js';
