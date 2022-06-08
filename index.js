@@ -30,6 +30,7 @@ import './handWrite/new.js';
 
 // Self Test
 
+import './handWrite/2022-6-8.js';
 import './handWrite/2022-6-5.js';
 import './handWrite/2022-6-1.js';
 import './handWrite/2022-5-31.js';

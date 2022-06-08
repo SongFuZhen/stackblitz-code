@@ -6,7 +6,6 @@ console.log('快速排序');
  * 2. 遍历数组，大于的放数组右边，小于的放在左边
  * 3. 递归并且用 concat 连接
  */
-
 function quickSort(arr) {
   if (arr.length < 1) {
     return arr;
