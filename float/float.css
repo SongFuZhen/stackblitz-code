@@ -1,0 +1,95 @@
+/* 圣杯布局 */
+
+.cup {
+  padding-left: 200px;
+  padding-right: 100px;
+  margin-top: 20px;
+  clear: both;
+  overflow: hidden;
+}
+
+.cup > .column {
+  position: relative;
+  float: left;
+  height: 300px;
+  line-height: 300px;
+  text-align: center;
+}
+
+.cup > .center {
+  width: 100%;
+  background: #e2e2e2;
+}
+
+.cup > .left {
+  width: 200px;
+  right: 200px;
+  margin-left: -100%;
+  background: red;
+}
+
+.cup > .right {
+  width: 100px;
+  right: -100px;
+  margin-left: -100px;
+  background: beige;
+}
+
+/* .cup {
+  display: flex;
+  padding: 0 100px 0 200px;
+  height: 300px;
+  text-align: center;
+}
+
+.left {
+  position: relative;
+  width: 200px;
+  left: -200px;
+  margin-left: -100%;
+  background: cadetblue;
+}
+
+.center {
+  background: red;
+  width: 100%;
+}
+
+.right {
+  position: relative;
+  right: -110px;
+  width: 100px;
+  background: darkgray;
+} */
+
+.fly {
+  margin: 20px 100px 0 200px;
+  clear: both;
+}
+
+.fly .column {
+  position: relative;
+  float: left;
+  height: 300px;
+  line-height: 300px;
+  text-align: center;
+}
+
+.fly > .center {
+  width: 100%;
+  background: lightseagreen;
+}
+
+.fly > .left {
+  width: 200px;
+  left: -200px;
+  margin-left: -100%;
+  background: lightgray;
+}
+
+.fly > .right {
+  width: 100px;
+  margin-left: -100px;
+  right: -100px;
+  background: lightpink;
+}
