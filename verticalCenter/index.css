@@ -1,0 +1,47 @@
+.first {
+  height: 200px;
+  width: 300px;
+  background: lightgreen;
+  position: relative;
+}
+
+.first > .ele {
+  width: 100px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  background: lightpink;
+}
+
+/* 方案 1：使用 transform */
+/* .first > .custom {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+} */
+
+/* 方案2： 使用宽高设置 margin */
+/* .first > .custom {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -20px;
+  margin-left: -50px;
+} */
+
+/* 方式3：使用 margin auto */
+/* .first > .custom {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+} */
+
+.first {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
