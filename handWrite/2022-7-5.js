@@ -190,13 +190,119 @@ function flat_arr_0705_with_depth(arr, depth = 1) {
       );
     }, []);
   }
+
+  // return [...arr];
+  return arr.slice();
+}
+
+function flat_arr_0705_regExp(arr) {
+  return JSON.stringify(arr)
+    .replaceAll(/(\[|\])/g, '')
+    .split(',')
+    .map((d) => parseInt(d));
+}
+
+function flat_arr_0705_some(arr) {
+  while (arr.some((item) => Array.isArray(item))) {
+    arr = [].concat(...arr);
+  }
+
+  return arr;
 }
 
 (function () {
   const arr = [0, [1], [2, 3, [4, 5]]];
 
+  console.log(arr.flat(2));
+  console.log(Array.prototype.flat.call(arr, 2));
+
   console.log(flat_arr_0705_string(arr));
-  console.log(flat_arr_0705_with_depth(arr));
+  console.log(flat_arr_0705_regExp(arr));
+  console.log(flat_arr_0705_some(arr));
+  console.log(flat_arr_0705_with_depth(arr, 1));
+});
+
+// #endregion
+
+// #region 手写 array reduce
+/**
+ * 传入统计值和初始值
+ * 如果没有初始值，那么就从 1 开始计算
+ * 如果有，那么就从 0 开始计算
+ */
+
+Array.prototype.my_reduce_0705 = function (reducer, initValue) {
+  const arr = this;
+
+  let total = initValue ? initValue : arr[0];
+
+  for (let i = initValue ? 1 : 0; i < arr.length; ++i) {
+    total = reducer(total, arr[i], i, arr);
+  }
+
+  return total;
+};
+
+(function () {
+  const arr = [1, 2, 3, 4];
+
+  const result = arr.my_reduce_0705((p, x, i, arr) => {
+    // console.log(x, i, arr);
+    return p * x;
+  });
+
+  console.log(result);
+});
+
+// #endregion
+
+// #region 手写 快速排序算法
+function quickSort0705(arr) {
+  if (arr.length <= 1) {
+    return arr;
+  }
+
+  const pivot = arr[0];
+  const left = [];
+  const right = [];
+
+  for (let i = 0; i < arr.length; ++i) {
+    if (arr[i] < pivot) {
+      left.push(arr[i]);
+    } else {
+      right.push(arr[i]);
+    }
+  }
+
+  const leftArr = quickSort0705(left);
+  const rightArr = quickSort0705(right);
+
+  return leftArr.concat([pivot], rightArr);
+}
+
+// #endregion
+
+// #region 手写 冒泡排序
+
+function bubbleSort0705(arr) {
+  for (let i = 0; i < arr.length; ++i) {
+    for (let j = 0; j < arr.length - 1; ++j) {
+      if (arr[j] > arr[j + 1]) {
+        let tmp = arr[j];
+        arr[j] = arr[j + 1];
+        arr[j + 1] = tmp;
+      }
+    }
+  }
+
+  return arr;
+}
+
+(function () {
+  const arr = [39, 11, 0, 2, 1, 2, 1, 111, 1, 33];
+  console.log(bubbleSort0705(arr));
+
+  console.log(quickSort0705(arr));
 })();
 
 // #endregion
