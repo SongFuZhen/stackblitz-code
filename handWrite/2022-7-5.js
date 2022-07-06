@@ -334,10 +334,8 @@ function linReverse0705(root) {
   let pre = null;
 
   while (cur) {
-    if (cur.next) {
-      pre = cur;
-      cur = cur.next;
-    }
+    pre = cur;
+    cur = cur.next;
   }
 
   return pre;
