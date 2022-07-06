@@ -262,7 +262,8 @@ function quickSort0705(arr) {
     return arr;
   }
 
-  const pivot = arr[0];
+  const pivot = arr.shift();
+
   const left = [];
   const right = [];
 
@@ -284,14 +285,24 @@ function quickSort0705(arr) {
 
 // #region 手写 冒泡排序
 
+/**
+ * 可以添加上done 来进行减少排序次数
+ */
 function bubbleSort0705(arr) {
   for (let i = 0; i < arr.length; ++i) {
-    for (let j = 0; j < arr.length - 1; ++j) {
+    let done = true;
+    for (let j = 0; j < arr.length - 1 - i; ++j) {
       if (arr[j] > arr[j + 1]) {
         let tmp = arr[j];
         arr[j] = arr[j + 1];
         arr[j + 1] = tmp;
+
+        done = false;
       }
+    }
+
+    if (done) {
+      break;
     }
   }
 
@@ -299,10 +310,55 @@ function bubbleSort0705(arr) {
 }
 
 (function () {
-  const arr = [39, 11, 0, 2, 1, 2, 1, 111, 1, 33];
-  console.log(bubbleSort0705(arr));
+  const arr = [444, 555, 39, 11, 0, 2, 1, 2, 1, 111, 1, 33];
+
+  const testArr = Array.from({ length: 100 }).map(() => {
+    return Math.floor(Math.random() * 100);
+  });
+
+  const testArr2 = Array.from(new Array(100).keys()).map((d) => {
+    return Math.floor(Math.random() * d);
+  });
 
   console.log(quickSort0705(arr));
+  console.log(quickSort0705(testArr));
+  console.log(quickSort0705(testArr2));
+});
+
+// #endregion
+
+// #region 手写 单链表反转
+
+function linReverse0705(root) {
+  let cur = root;
+  let pre = null;
+
+  while (cur) {
+    if (cur.next) {
+      pre = cur;
+      cur = cur.next;
+    }
+  }
+
+  return pre;
+}
+
+(function () {
+  let link0705 = {
+    a: 1,
+    next: {
+      a: 2,
+      next: {
+        a: 3,
+        next: {
+          a: 4,
+          next: null,
+        },
+      },
+    },
+  };
+
+  console.log(linReverse0705(link0705));
 })();
 
 // #endregion
