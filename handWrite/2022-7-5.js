@@ -1,5 +1,64 @@
 console.log('2022-7-5');
 
+// #region 手写 防抖 debounce
+
+function debounce0705(func, timer) {}
+
+(function () {});
+
+// #endregion
+
+// #region 手写 深拷贝
+
+function cloneDeep(obj, map = new Map()) {
+  if (typeof obj !== 'object' || obj === null) {
+    return obj;
+  }
+
+  if (map.has(obj)) {
+    return map.get(obj);
+  }
+
+  const objClone =
+    Object.prototype.toString.call(obj) === '[object Array]' ? [] : {};
+
+  map.set(obj, objClone);
+
+  for (const i in obj) {
+    if (obj.hasOwnProperty(i)) {
+      objClone[i] = cloneDeep(obj[i], map);
+    }
+  }
+
+  return objClone;
+}
+
+// #endregion
+
+// #region 手写 fibonacci
+
+function fibonacci0705(n) {
+  const dp = [0, 1];
+
+  function run(m) {
+    if (dp[m] === undefined) {
+      dp[m] = run(m - 1) + run(m - 2);
+    }
+
+    return dp[m];
+  }
+
+  run(n);
+
+  return dp[n];
+}
+
+(function () {
+  console.log(fibonacci0705(5));
+});
+
+// #endregion
+
 // #region 手写 call
 // 手写 call 方法
 // 1、判断是否是函数，不是就报错
@@ -357,6 +416,6 @@ function linReverse0705(root) {
   };
 
   console.log(linReverse0705(link0705));
-})();
+});
 
 // #endregion
