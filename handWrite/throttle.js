@@ -38,8 +38,8 @@ function throttle_timeout(func, timer) {
 
     if (!timeout) {
       timeout = setTimeout(function () {
-        timeout = null;
         func.apply(context, args);
+        timeout = null;
       }, timer);
     }
   };

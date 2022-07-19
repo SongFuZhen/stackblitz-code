@@ -1,5 +1,21 @@
 console.log('---Debounce---');
 
+// 简单版本的
+function easyDebounce(func, time) {
+  let timer;
+
+  return function () {
+    let context = this; // 保存this指向
+    let args = arguments; // 拿到event对象
+
+    clearTimeout(timer);
+
+    timer = setTimeout(() => {
+      func.apply(context, args);
+    }, time);
+  };
+}
+
 function debounce(func, timer, immediate) {
   let timeout;
 
